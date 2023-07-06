@@ -1,0 +1,61 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 100vh;
+  padding: 120px;
+  background-color: #fff;
+  @media screen and (max-width: 680px) {
+    padding: 64px 24px;
+  }
+}
+
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  
+  @media screen and (max-width: 680px) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.eachTestimonial {
+  position: relative;
+  .content {
+    // border: 1px solid #000;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.04);
+    height: 100%;
+    background-color: #fff;
+    z-index: 2;
+    position: relative;
+    svg {
+      margin-left: auto;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+    p {
+      font-size: 0.85rem;
+      line-height: 1.6rem;
+    }
+    h4 {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+  }
+  .border {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border: 2px solid #000;
+    top: 12px;
+    left: 12px;
+    z-index: 1;
+  }
+}
