@@ -1,0 +1,158 @@
+@use "./fonts";
+
+// Breakpoints
+@mixin smallLaptop() {
+    @media (max-width: (75rem)) {
+        @content;
+    }
+}
+@mixin bigTablet() {
+    @media (max-width: (56.25rem)) {
+        @content;
+    }
+}
+@mixin tablet() {
+    @media (max-width: (48rem)) {
+        @content;
+    }
+}
+@mixin bigMobilePhone() {
+    @media (max-width: (32.5rem)) {
+        @content;
+    }
+}
+@mixin midSizeMobilePhone() {
+    @media (max-width: (25rem)) {
+        @content;
+    }
+}
+@mixin smallmobilePhone() {
+    @media (max-width: (20rem)) {
+        @content;
+    }
+}
+
+// Buttons
+
+@mixin text-button {
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+    font-size: $font-size-16 - 0.125rem;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: $primary-color;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 300ms ease;
+
+    &:hover {
+        opacity: 0.6;
+    }
+}
+
+// .inactiveBtn {
+// }
+
+@mixin scrollArea {
+    scrollbar-width: thin;
+
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+        width: 0.313rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 0.313rem;
+    }
+}
+ 
+// STYLES ===============
+
+.innerBody {
+    width: 100%;
+    min-width: 80%;
+    min-height: 100%;
+    overflow-y: auto;
+    @include scrollArea();
+
+    // @include tablet {
+        // width: 85%;
+    // }
+}
+
+.errorMsg,
+.successMsg {
+    font-size: 12px;
+    color: $failed-color;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+
+    svg {
+        width: 12px;
+        height: 12x;
+        display: inline-flex;
+        height: fit-content;
+
+        path {
+            fill: $failed-color;
+        }
+    }
+}
+.successMsg {
+    color: $success-color;
+    svg {
+        path {
+            fill: $success-color;
+        }
+    }
+}
+
+.scrollArea {
+    &::-webkit-scrollbar-thumb {
+        background-color: lighten($color: $primary-color, $amount: 40%);
+        border-radius: 1rem;
+        border: 0.188rem solid transparent;
+        cursor: pointer;
+        &:hover {
+            background-color: $secondary-color;
+        }
+    }
+    &::-webkit-scrollbar {
+        width: 0.5rem;
+        @media screen and (max-width: 48rem) {
+            width: 0.25rem;
+        }
+    }
+    &::-webkit-scrollbar-track {
+        background-color: rgba($primary-color, 0.2);
+    }
+}
+
+.scrollAreaMin {
+    @extend .scrollArea;
+    &::-webkit-scrollbar {
+        width: 0.25rem;
+        @media screen and (max-width: 768p4) {
+            width: 0.125rem;
+        }
+    }
+}
+
+// Animations
+@mixin bumpDownAnimation($fromTop: 2.188rem) {
+    // animation: bumpDown 400ms cubic-bezier(0.91, -0.31, 0.27, 1.55);
+    animation: bumpDown 400ms cubic-bezier(0.65, -0.07, 0.25, 1.24);
+
+    @keyframes bumpDown {
+        from {
+            top: $fromTop;
+            opacity: 0;
+        }
+    }
+}
