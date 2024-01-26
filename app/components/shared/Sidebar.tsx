@@ -1,14 +1,16 @@
-import { ReactElement, FunctionComponent } from "react";
+import { ReactElement, FunctionComponent, Dispatch, SetStateAction } from "react";
 import styles from '@/app/styles/Sidebar.module.scss';
 import { ArrowRightIcon, BoxIcon, CustomerIcon, DashboardIcon, DiscountIcon, InfoCircleIcon, LogoIcon, LogoutIcon, MoonIcon, SettingsIcon, SunIcon, TradeIcon } from "../SVGs/SVGicons";
 import useResponsiveness from "@/app/hooks/useResponsiveness";
 import { WindowSizes } from "@/app/constants/windowSizes";
+import { Theme } from "@/app/enums/Theme";
 
 interface SidebarProps {
-
+    selectedTheme: Theme
+    setSelectedTheme: Dispatch<SetStateAction<Theme>>
 }
 
-const Sidebar: FunctionComponent<SidebarProps> = (): ReactElement => {
+const Sidebar: FunctionComponent<SidebarProps> = ({ selectedTheme, setSelectedTheme }): ReactElement => {
 
     const windowRes = useResponsiveness();
     const onMobile = windowRes.width && windowRes.width < WindowSizes.Tablet_Size;
@@ -42,10 +44,14 @@ const Sidebar: FunctionComponent<SidebarProps> = (): ReactElement => {
                                 <InfoCircleIcon />
                             </span>
                             <div className={styles.lightSetting}>
-                                <span className={styles.selected}>
+                                <span
+                                    onClick={() => setSelectedTheme(Theme.Light)}
+                                    className={selectedTheme == Theme.Light ? styles.selected : ""}>
                                     <SunIcon />
                                 </span>
-                                <span>
+                                <span
+                                    onClick={() => setSelectedTheme(Theme.Dark)}
+                                    className={selectedTheme == Theme.Dark ? styles.selected : ""}>
                                     <MoonIcon />
                                 </span>
                             </div>

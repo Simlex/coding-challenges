@@ -14,7 +14,7 @@
     height: 100%;
     width: 5rem;
     padding-top: 1.25rem;
-    background-color: $sidebar-bg;
+    background-color: var(--sidebar-bg);
 
     .logo {
         width: 2.5rem;
@@ -55,11 +55,11 @@
             }
             &:hover {
                 &::after {
-                    background-color: rgba($color: $dark-grey, $alpha: 0.2);
+                    background-color: rgba($color: var(--dark-grey), $alpha: 0.2);
                 }
                 svg {
                     path {
-                        stroke: #0D062D;
+                        stroke: var(--dark-grey);
                     }
                 }
             }
@@ -67,11 +67,11 @@
         .active {
             pointer-events: none;
             &::after {
-                background-color: $dark-grey;
+                background-color: var(--dark-grey);
             }
             svg {
                 path {
-                    stroke: #0D062D;
+                    stroke: var(--dark-grey);
                 }
             }
         }
@@ -79,7 +79,7 @@
         .lightSetting {
             display: flex;
             flex-direction: column;
-            background-color: $white;
+            background-color: var(--white);
             gap: .125rem;
             margin-top: 2rem;
             padding: .5rem;
@@ -93,10 +93,10 @@
                 border-radius: 100%;
                 // border: 1px solid #000;
                 &:hover {
-                    background-color: rgba($color: $dark-grey, $alpha: 0.1);
+                    background-color: rgba($color: var(--dark-grey), $alpha: 0.1);
                     svg {
                         path {
-                            stroke: #B2ABAB;
+                            stroke: var(--text-grey);
                         }
                     }
                 }

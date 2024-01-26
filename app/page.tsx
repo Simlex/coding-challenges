@@ -4,9 +4,13 @@ import SalesTrendSection from "./components/Dashboard/SalesTrendSection";
 import DashboardKpiSection from "./components/Dashboard/DashboardKpiSection";
 import LastOrdersSection from "./components/Dashboard/LastOrdersSection";
 import TopPlatformSection from "./components/Dashboard/TopPlatformSection";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Theme } from "./enums/Theme";
 
 export default function Home() {
 
+    const router = useRouter();
     const maxValue = 5000000;
 
     return (

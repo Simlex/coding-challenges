@@ -2,7 +2,7 @@
 @import "./reusables";
 
 .mNavbarContainer {
-    background-color: $grey-bg;
+    background-color: var(--grey-bg);
     padding: .625rem 1.25rem;
     display: flex;
     align-items: center;
@@ -12,11 +12,13 @@
         height: 2.125rem;
         display: grid;
         place-items: center;
-        border: 1px solid darken($color: $grey-bg, $amount: 15%);
+        // border: 1px solid darken($color: var(--grey-bg), $amount: 15%);
+        border: 1px solid var(--gray-bg);
         border-radius: 2.125rem;
         cursor: pointer;
         &:hover {
-            background-color: darken($color: $grey-bg, $amount: 0.5%);
+            // background-color: darken($color: var(--grey-bg), $amount: 0.5%);
+            background-color: var(--grey-bg);
             opacity: 0.6;
         }
 
@@ -40,7 +42,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: $grey-bg;
+    background-color: var(--grey-bg);
+    color: var(--dark-grey);
 
     h2 {
         font-size: $font-size-20;
@@ -70,7 +73,9 @@
             }
             input {
                 padding: 0.75rem 2.625rem;
-                border: 1px solid $grey-bg-dark;
+                border: 1px solid var(--grey-bg-dark);
+                background-color: var(--grey-bg);
+                color: var(--black);
                 border-radius: 1.5rem;
                 width: 100%;
                 height: 48px;
@@ -79,10 +84,10 @@
                     font-size: $font-size-16 - 0.1875rem;
                     font-style: normal;
                     font-weight: $fontWeight-200 - 100;
-                    color: $dark-grey;
+                    color: var(--dark-grey);
                 }
                 &:focus {
-                    border: 1px solid $dark-grey;
+                    border: 1px solid var(--dark-grey);
                 }
             }
         }
@@ -103,12 +108,12 @@
         }
         .notificationIcon {
             padding: 0.6875rem;
-            border: 0.0481rem solid $grey-bg-dark;
+            border: 0.0481rem solid var(--grey-bg-dark);
             display: inline-flex;
             border-radius: 100%;
             cursor: pointer;
             &:hover {
-                background-color: rgba($color: $grey-bg-dark, $alpha: 0.4);
+                background-color: rgba($color: var(--grey-bg-dark), $alpha: 0.4);
                 opacity: 0.6;
             }
         }
@@ -118,14 +123,14 @@
             gap: 0.5rem;
             padding: 0.5rem;
             cursor: pointer;
-            border: 1px solid $grey-bg-dark;
+            border: 1px solid var(--grey-bg-dark);
             border-radius: 3rem;
             display: flex;
             align-items: center;
 
             &:hover {
                 opacity: 0.8;
-                background-color: rgba($color: $grey-bg-dark, $alpha: 0.4);
+                background-color: rgba($color: var(--grey-bg-dark), $alpha: 0.4);
             }
             .profileImage {
                 width: 2.375rem;
@@ -142,10 +147,10 @@
                 p {
                     font-size: $font-size-16 - 0.125rem;
                     font-weight: $fontWeight-300;
-                    color: $dark-grey;
+                    color: var(--dark-grey);
                 }
                 p {
-                    color: $text-grey;
+                    color: var(--text-grey);
                 }
             }
             .profileName {

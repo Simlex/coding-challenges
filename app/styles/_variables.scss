@@ -30,6 +30,34 @@ $blue : #54C5EB;
 $orange : #FFB74A;
 $red : #FF4A55;
 
+$themes: (
+    pageBackground: (
+        lightTheme: $grey-bg,
+        darkTheme: $dark-grey,
+    ),
+    generalText: (
+        lightTheme: $dark-grey,
+        darkTheme: $grey-bg,
+    ),
+);
+
+@mixin styles($mode) {
+    @each $key, $map in $themes {
+        @each $prop, $color in $map {
+            @if $prop == $mode {
+                --#{key}: #{$color};
+            }
+        }
+    }
+}
+
+// .dark-mode {
+//     @include styles("darkTheme");
+// }
+// .light-mode {
+//     @include styles("lightTheme");
+// }
+
 //Shadow
 $boxShadow : 0rem .625rem 1.25rem rgba(0, 0, 0, 0.5);
 
