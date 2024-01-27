@@ -3,12 +3,13 @@ import { FunctionComponent, ReactElement, useState, useRef, useEffect } from 're
 import styles from '@/app/styles/Navbar.module.scss';
 import useResponsive from '../../hooks/useResponsiveness';
 import { WindowSizes } from '@/app/constants/windowSizes';
-import { CalendarIcon, CaretDownIcon, HamburgerIcon, LogoIcon, NotificationIcon, SearchIcon } from '../SVGs/SVGicons';
+import { CalendarIcon, CaretDownIcon, HamburgerIcon, LogoIcon, MoonIcon, NotificationIcon, SearchIcon, SunIcon } from '../SVGs/SVGicons';
 import Image from 'next/image';
 import images from '@/public/images';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from '@/app/redux/store';
 import { Theme } from '@/app/enums/Theme';
+import { updateAppTheme } from '@/app/redux/features/theme/themeSlice';
 
 interface NavbarProps {
 
@@ -19,13 +20,22 @@ const Navbar: FunctionComponent<NavbarProps> = (): ReactElement => {
     const windowRes = useResponsive();
     const onMobile = windowRes.width && windowRes.width < WindowSizes.Tablet_Size;
     const appTheme = useSelector((state: RootState) => state.theme.appTheme);
+    const dispatch = useDispatch();
 
     return (
         <>
             {
                 typeof (onMobile) == "boolean" && onMobile &&
                 <div className={styles.mNavbarContainer}>
-                    <span className={styles.seachIcon}><SearchIcon /></span>
+                    {/* <span className={styles.seachIcon}><SearchIcon /></span> */}
+                    <span
+                        className={styles.themeToggler}
+                        onClick={() =>
+                            dispatch(appTheme == Theme.Light ?
+                                updateAppTheme(Theme.Dark) :
+                                updateAppTheme(Theme.Light))}>
+                        {appTheme == Theme.Light ? <SunIcon active /> : <MoonIcon />}
+                    </span>
                     <span className={styles.logoIcon}><LogoIcon /></span>
                     <span className={styles.navIcon}><HamburgerIcon /></span>
                 </div>
