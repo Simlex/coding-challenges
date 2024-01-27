@@ -108,6 +108,11 @@
             .selected {
                 background-color: $primary-color;
                 pointer-events: none;
+                svg {
+                    path {
+                        fill: #fff;
+                    }
+                }
             }
         }
     }
