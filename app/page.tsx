@@ -10,7 +10,6 @@ import { Theme } from "./enums/Theme";
 
 export default function Home() {
 
-    const router = useRouter();
     const maxValue = 5000000;
 
     return (

@@ -1,14 +1,14 @@
 "use client"
 import type { Metadata } from 'next'
-import { FunctionComponent, ReactElement, ReactNode, useContext, useEffect, useState } from 'react';
+import { FunctionComponent, ReactElement, ReactNode, useEffect, useState } from 'react';
 import Navbar from './Navbar';
-import { usePathname } from 'next/navigation';
-import Image from 'next/image';
 import Sidebar from './Sidebar';
 import { LogoIcon } from '../SVGs/SVGicons';
 import useResponsiveness from '@/app/hooks/useResponsiveness';
 import { WindowSizes } from '@/app/constants/windowSizes';
 import { Theme } from '@/app/enums/Theme';
+import { Provider, useSelector } from "react-redux";
+import { RootState, store } from "@/app/redux/store";
 
 export const metadata: Metadata = {
     title: 'Ticket wave web application',
@@ -21,6 +21,7 @@ interface LayoutProps {
 
 const Layout: FunctionComponent<LayoutProps> = ({ children }): ReactElement => {
 
+    // const appTheme = useSelector((state: RootState) => state.theme.appTheme);
     const [selectedTheme, setSelectedTheme] = useState(Theme.Light);
 
     const [loaderIsVisible, setLoaderIsVisible] = useState(true);
@@ -52,37 +53,36 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }): ReactElement => {
     // }, [selectedTheme])
 
     return (
-        <html lang="en" data-theme={selectedTheme == Theme.Light ? "light" : "dark"}>
-            <body>
-                <>
-                    {
-                        !loaderIsVisible &&
-                        <>
-                            <div className="appLayout">
-                                <Sidebar
-                                    selectedTheme={selectedTheme}
-                                    setSelectedTheme={setSelectedTheme}
-                                />
-                                <div className="appLayout__body" style={typeof (onMobile) == "boolean" && onMobile ? { width: '100%' } : {}}>
-                                    <Navbar />
-                                    <div className="innerBody">
-                                        {children}
+        <Provider store={store}>
+            <html lang="en" data-theme={selectedTheme == Theme.Light ? "light" : "dark"}>
+                <body>
+                    <>
+                        {
+                            !loaderIsVisible &&
+                            <>
+                                <div className="appLayout">
+                                    <Sidebar setSelectedTheme={setSelectedTheme} />
+                                    <div className="appLayout__body" style={typeof (onMobile) == "boolean" && onMobile ? { width: '100%' } : {}}>
+                                        <Navbar />
+                                        <div className="innerBody">
+                                            {children}
+                                        </div>
                                     </div>
                                 </div>
+                            </>
+                        }
+                        {
+                            loaderIsVisible &&
+                            <div className="splashScreen">
+                                <div className="image">
+                                    <LogoIcon />
+                                </div>
                             </div>
-                        </>
-                    }
-                    {
-                        loaderIsVisible &&
-                        <div className="splashScreen">
-                            <div className="image">
-                                <LogoIcon />
-                            </div>
-                        </div>
-                    }
-                </>
-            </body>
-        </html>
+                        }
+                    </>
+                </body>
+            </html>
+        </Provider >
     )
 }
 

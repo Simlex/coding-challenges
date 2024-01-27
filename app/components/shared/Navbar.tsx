@@ -6,6 +6,9 @@ import { WindowSizes } from '@/app/constants/windowSizes';
 import { CalendarIcon, CaretDownIcon, HamburgerIcon, LogoIcon, NotificationIcon, SearchIcon } from '../SVGs/SVGicons';
 import Image from 'next/image';
 import images from '@/public/images';
+import { useSelector } from "react-redux";
+import { RootState } from '@/app/redux/store';
+import { Theme } from '@/app/enums/Theme';
 
 interface NavbarProps {
 
@@ -15,6 +18,7 @@ const Navbar: FunctionComponent<NavbarProps> = (): ReactElement => {
 
     const windowRes = useResponsive();
     const onMobile = windowRes.width && windowRes.width < WindowSizes.Tablet_Size;
+    const appTheme = useSelector((state: RootState) => state.theme.appTheme);
 
     return (
         <>
@@ -36,11 +40,11 @@ const Navbar: FunctionComponent<NavbarProps> = (): ReactElement => {
                             <input type="search" placeholder='Search...' />
                         </div>
                         <div className={styles.dateSection}>
-                            <CalendarIcon />
+                            <CalendarIcon active={appTheme == Theme.Dark} />
                             November 15, 2023
                         </div>
                         <span className={styles.notificationIcon}>
-                            <NotificationIcon />
+                            <NotificationIcon active={appTheme == Theme.Dark} />
                         </span>
                         <div className={styles.profileSection}>
                             <span className={styles.profileImage}>
@@ -50,7 +54,7 @@ const Navbar: FunctionComponent<NavbarProps> = (): ReactElement => {
                                 <h5>Justin Bergson</h5>
                                 <p>Justin@gmail.com</p>
                             </div>
-                            <CaretDownIcon />
+                            <CaretDownIcon active={appTheme == Theme.Dark} />
                         </div>
                     </div>
                 </div>

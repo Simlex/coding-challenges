@@ -1,7 +1,10 @@
 import { FunctionComponent, ReactElement, useRef, useState } from "react";
 import { CaretDownIcon } from "../SVGs/SVGicons";
 import useOuterClick from "@/app/hooks/useOuterClick";
-import styles from "../../styles/Dashboard.module.scss"
+import styles from "../../styles/Dashboard.module.scss";
+import { useSelector } from "react-redux";
+import { RootState } from '@/app/redux/store';
+import { Theme } from "@/app/enums/Theme";
 
 interface SalesTrendSectionProps {
 
@@ -15,6 +18,7 @@ interface MonthlyData {
 const SalesTrendSection: FunctionComponent<SalesTrendSectionProps> = (): ReactElement => {
     
 
+    const appTheme = useSelector((state: RootState) => state.theme.appTheme);
     const [salesTrendFilterDropdownIsVisible, setSalesTrendFilterDropdownIsVisible] = useState(false);
 
     function generateSequence(minValue: number, maxValue: number, numberOfSteps: number): number[] {
@@ -66,7 +70,7 @@ const SalesTrendSection: FunctionComponent<SalesTrendSectionProps> = (): ReactEl
                 <div className={styles.chartSetting}>
                     <p>Sort by:</p>
                     <div className={styles.filterContainer} ref={salesTrendFilterDropdownRef}>
-                        <span onClick={() => setSalesTrendFilterDropdownIsVisible(true)}>Weekly <CaretDownIcon /></span>
+                        <span onClick={() => setSalesTrendFilterDropdownIsVisible(true)}>Weekly <CaretDownIcon active={appTheme == Theme.Dark} /></span>
                         {
                             salesTrendFilterDropdownIsVisible &&
                             <ul className={styles.dropdownContainer}>
