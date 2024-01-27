@@ -1,25 +1,28 @@
-import { FunctionComponent, ReactElement, useRef, useState } from "react";
+import { FunctionComponent, ReactElement, useEffect, useRef, useState } from "react";
 import { CaretDownIcon } from "../SVGs/SVGicons";
 import useOuterClick from "@/app/hooks/useOuterClick";
 import styles from "../../styles/Dashboard.module.scss";
 import { useSelector } from "react-redux";
 import { RootState } from '@/app/redux/store';
 import { Theme } from "@/app/enums/Theme";
+import { MonthlyData, WeeklyData, YearlyData, generateRandomChartData, generateValuesAbbreviations } from "@/app/constants/chartDataGenerator";
+import { Timeframe } from "@/app/enums/Timeframe";
+import { serializeTimeframe } from "@/app/constants/serializeEnum";
 
 interface SalesTrendSectionProps {
 
 }
 
-interface MonthlyData {
-    month: string;
-    price: number;
-}
-
 const SalesTrendSection: FunctionComponent<SalesTrendSectionProps> = (): ReactElement => {
-    
+
 
     const appTheme = useSelector((state: RootState) => state.theme.appTheme);
     const [salesTrendFilterDropdownIsVisible, setSalesTrendFilterDropdownIsVisible] = useState(false);
+    const [generatedMonthlyData, setGeneratedMonthlyData] = useState<MonthlyData[]>();
+    const [generatedWeeklyData, setGeneratedWeeklyData] = useState<WeeklyData[]>();
+    const [generatedYearlyData, setGeneratedYearlyData] = useState<YearlyData[]>();
+
+    const [selectedTimeframe, setSelectedTimeframe] = useState(Timeframe.Months);
 
     function generateSequence(minValue: number, maxValue: number, numberOfSteps: number): number[] {
         const sequence: number[] = [];
@@ -39,29 +42,12 @@ const SalesTrendSection: FunctionComponent<SalesTrendSectionProps> = (): ReactEl
         return sequence;
     };
 
-    function generateMonthAbbreviations(): string[] {
-        const months: string[] = [
-            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-        ];
-        return months;
-    };
-
-    function generateRandomChartData(minValue: number, maxValue: number, months: string[]): MonthlyData[] {
-        const data: MonthlyData[] = [];
-        const minPrice = minValue; // Minimum price
-        const maxPrice = maxValue; // Maximum price
-
-        for (let month of months) {
-            const price = Math.floor(Math.random() * (maxPrice - minPrice + 1)) + minPrice;
-            data.push({ month, price });
-        }
-
-        return data;
-    }
-
     const salesTrendFilterDropdownRef = useRef<HTMLDivElement>(null);
     useOuterClick(salesTrendFilterDropdownRef, setSalesTrendFilterDropdownIsVisible);
+
+    useEffect(() => {
+        generateRandomChartData(0, 50000, generateValuesAbbreviations("months"), generatedMonthlyData, setGeneratedMonthlyData);
+    }, []);
 
     return (
         <div className={styles.salesTrendChartSection}>
@@ -70,14 +56,29 @@ const SalesTrendSection: FunctionComponent<SalesTrendSectionProps> = (): ReactEl
                 <div className={styles.chartSetting}>
                     <p>Sort by:</p>
                     <div className={styles.filterContainer} ref={salesTrendFilterDropdownRef}>
-                        <span onClick={() => setSalesTrendFilterDropdownIsVisible(true)}>Weekly <CaretDownIcon active={appTheme == Theme.Dark} /></span>
+                        <span onClick={() => setSalesTrendFilterDropdownIsVisible(true)}>{serializeTimeframe(selectedTimeframe)} <CaretDownIcon active={appTheme == Theme.Dark} /></span>
                         {
                             salesTrendFilterDropdownIsVisible &&
                             <ul className={styles.dropdownContainer}>
-                                <li>Daily</li>
-                                <li className={styles.selected}>Weekly</li>
-                                <li>Monthly</li>
-                                <li>Yearly</li>
+                                <li
+                                    className={selectedTimeframe == Timeframe.Days ? styles.selected : ""}
+                                    onClick={() => {
+                                        setSelectedTimeframe(Timeframe.Days)
+                                        setSalesTrendFilterDropdownIsVisible(false);
+                                    }} >Daily</li>
+                                {/* <li className={selectedTimeframe == Timeframe.Months ? styles.selected : ""} onClick={() => setSelectedTimeframe(Timeframe.Months)} >Weekly</li> */}
+                                <li
+                                    className={selectedTimeframe == Timeframe.Months ? styles.selected : ""}
+                                    onClick={() => {
+                                        setSelectedTimeframe(Timeframe.Months)
+                                        setSalesTrendFilterDropdownIsVisible(false);
+                                    }} >Monthly</li>
+                                <li
+                                    className={selectedTimeframe == Timeframe.Years ? styles.selected : ""}
+                                    onClick={() => {
+                                        setSelectedTimeframe(Timeframe.Years)
+                                        setSalesTrendFilterDropdownIsVisible(false);
+                                    }} >Yearly</li>
                             </ul>
                         }
                     </div>
@@ -94,7 +95,7 @@ const SalesTrendSection: FunctionComponent<SalesTrendSectionProps> = (): ReactEl
                 <div className={styles.mainChartSection}>
                     <div className={styles.chartArea}>
                         {
-                            generateRandomChartData(0, 50000, generateMonthAbbreviations()).map((chartData, index) => (
+                            generatedMonthlyData?.map((chartData, index) => (
                                 <span
                                     // Set the data attribute to the coresponing month value
                                     data-value={chartData.price}
@@ -109,7 +110,7 @@ const SalesTrendSection: FunctionComponent<SalesTrendSectionProps> = (): ReactEl
                     </div>
                     <div className={styles.months}>
                         {
-                            generateMonthAbbreviations().map((month, index) => (
+                            generateValuesAbbreviations("months").map((month, index) => (
                                 <span key={index}>{month}</span>
                             ))
                         }

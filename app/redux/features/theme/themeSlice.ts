@@ -12,8 +12,8 @@ const isLocalStorageAvailable = typeof localStorage !== "undefined";
 const storedAppTheme = isLocalStorageAvailable
   ? localStorage.getItem("Theme")
   : null;
-  console.log("storedAppTheme: ", storedAppTheme);
-  console.log("parsed storedAppTheme: ", JSON.parse(storedAppTheme as string));
+//   console.log("storedAppTheme: ", storedAppTheme);
+//   console.log("parsed storedAppTheme: ", JSON.parse(storedAppTheme as string));
 
 // Define the initial state using the ThemeState interface
 const initialState: ThemeState = storedAppTheme
