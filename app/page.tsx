@@ -7,8 +7,10 @@ import QuickAccessCard from "@/components/homepage/QuickAccessCard";
 import RecentCardRequests from "@/components/homepage/RecentCardRequests";
 import WeeklyIncomeChart from "@/components/homepage/WeeklyIncomeChart";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import { Card } from "@/components/ui/card";
-import { ExpandIcon } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar1Icon, ExpandIcon } from "lucide-react";
 import moment from "moment";
 import Image from "next/image";
 import { useState } from "react";
@@ -31,14 +33,33 @@ export default function Home() {
           </div>
 
           <div className="flex justify-end">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="outline" size="sm" className="h-8">
+                        <Calendar1Icon />
+                        Today
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="end">
+                      <Calendar
+                        mode="single"
+                        selected={currentDate}
+                        onSelect={(date) => date && setCurrentDate(date)}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <span className="text-sm text-muted-foreground">{moment(currentDate).format("ddd. MMM yyyy")}</span>
+                </div> 
+            {/* <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" className="h-8">
                 Today
               </Button>
               <span className="text-sm text-muted-foreground">
                 {moment(new Date()).format("D MMM YYYY")}
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
 
