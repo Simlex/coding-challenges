@@ -47,13 +47,11 @@ export default function Sidebar() {
           <div className="relative h-10 w-[60%] flex flex-col justify-items-start">
             <Image src={images.lapo} alt="LAPO Logo" fill className="object-contain" />
           </div>
-          {/* <div className="font-bold text-orange-500">LAPO</div> */}
         </div>
       </div>
 
       <div className="flex-1 py-4 overflow-auto hideScrollbar">
         <div className="px-3 mb-5">
-          {/* <p className="text-xs font-medium text-muted-foreground mb-2 px-4">NAVIGATION</p> */}
           <SidebarItem icon={<Home size={18} />} label="Dashboard" active />
         </div>
 
